@@ -1,0 +1,6 @@
+discord.py
+gtts
+PyNaCl
+pymongo
+python-dotenv
+langdetect
