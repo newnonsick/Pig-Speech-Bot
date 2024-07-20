@@ -51,8 +51,7 @@ class Select_Help(discord.ui.Select):
         elif self.values[0] == "Support Languages":
             embedVar = discord.Embed(title="🌐 Support Languages", description="ดูภาษาที่บอท support").set_image(url=self.buttomImage)
             embedVar.add_field(name="Languages", 
-            value="""    
-            ┊ **auto** > `Auto Detect Language`      
+            value="""         
             ┊ **af** > `Afrikaans`
             ┊ **ar** > `Arabic`
             ┊ **bg** > `Bulgarian`
@@ -86,7 +85,8 @@ class Select_Help(discord.ui.Select):
             """, inline=False) 
             embedVar.add_field(name="Usage", 
             value="""             
-            ┊ **/setlanguage en** > `เปลี่ยนภาษาเป็นอังกฤษ`        
+            ┊ **/setlanguage en** > `เปลี่ยนภาษาเป็นอังกฤษ` 
+            ┊ **/setlanguage auto** > `เปลี่ยนเป็นให้บอทเลือกภาษาให้เอง`      
             """, inline=False) 
             await interaction.response.edit_message(embed=embedVar)
         elif self.values[0] == "Support Languages 2":
@@ -125,7 +125,8 @@ class Select_Help(discord.ui.Select):
             """, inline=False) 
             embedVar.add_field(name="Usage", 
             value="""             
-            ┊ **/setlanguage en** > `เปลี่ยนภาษาเป็นอังกฤษ`        
+            ┊ **/setlanguage en** > `เปลี่ยนภาษาเป็นอังกฤษ`   
+            ┊ **/setlanguage auto** > `เปลี่ยนเป็นให้บอทเลือกภาษาให้เอง`      
             """, inline=False) 
             await interaction.response.edit_message(embed=embedVar)
 

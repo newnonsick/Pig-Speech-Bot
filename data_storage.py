@@ -93,6 +93,5 @@ class DataStorage:
             'zh-TW',
             'zh',
         ]
-        print(cls.guildDict)
 
         print("DataStorage initialized")
