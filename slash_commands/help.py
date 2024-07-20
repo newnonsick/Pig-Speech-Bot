@@ -13,7 +13,7 @@ class Select_Help(discord.ui.Select):
         discord.SelectOption(label="Support Languages 2",emoji="✈️"),
         ]         
         super().__init__(max_values=1,min_values=1,options=options) 
-        self.buttomImage = "https://cdn.discordapp.com/attachments/1041014713816977471/1216018299465371668/image.png?ex=65fedc4b&is=65ec674b&hm=af5149ecb6915e4543a88bbd525e2f92436bb546249d27a14ca0677c614c86b6&"  
+        self.buttomImage = "https://cdn.discordapp.com/attachments/1041014713816977471/1264297698190688316/PigSpeech.png?ex=669d5c7c&is=669c0afc&hm=8937ed0e690cf64479944749c2417e87c41cc4d1b18a9ddd826b01f8950da6df&"  
 
     async def callback(self, interaction: discord.Interaction):         
         if self.values[0] == "Main Page":             
@@ -142,7 +142,7 @@ class Help(commands.Cog):
     @app_commands.command(name="help", description="Show the help menu") 
     async def help_command(self, interaction: discord.Interaction):     
         await interaction.response.defer()     
-        embedVar = discord.Embed().set_author(name="Pig Speech", icon_url="https://cdn.discordapp.com/attachments/1041014713816977471/1216018350908379216/pig_logo_2.jpg?ex=65fedc57&is=65ec6757&hm=6e1d7e6c1f1c6a86e26a1072d7beef83a69ee33074b0925486745744c9e1612e&").set_image(url="https://cdn.discordapp.com/attachments/1041014713816977471/1216018299465371668/image.png?ex=65fedc4b&is=65ec674b&hm=af5149ecb6915e4543a88bbd525e2f92436bb546249d27a14ca0677c614c86b6&")     
+        embedVar = discord.Embed().set_author(name="Pig Speech", icon_url="https://cdn.discordapp.com/attachments/1041014713816977471/1216018350908379216/pig_logo_2.jpg?ex=65fedc57&is=65ec6757&hm=6e1d7e6c1f1c6a86e26a1072d7beef83a69ee33074b0925486745744c9e1612e&").set_image(url="https://cdn.discordapp.com/attachments/1041014713816977471/1264297698190688316/PigSpeech.png?ex=669d5c7c&is=669c0afc&hm=8937ed0e690cf64479944749c2417e87c41cc4d1b18a9ddd826b01f8950da6df&")     
         embedVar.add_field(name="🖥 INVITE BOT", value="┊[CLICK HERE](https://discord.com/api/oauth2/authorize?client_id=1196197441381339298&permissions=551906461696&scope=bot)", inline=False)     
         embedVar.add_field(name="📖 Privacy Policy", value="┊[CLICK HERE](https://shorturl.at/CswvS)", inline=False)
         await interaction.edit_original_response(embed=embedVar,view=Select_Help_View()) 
