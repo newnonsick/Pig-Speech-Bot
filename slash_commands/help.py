@@ -81,11 +81,11 @@ class Select_Help(discord.ui.Select):
             ┊ **km** > `Khmer`
             ┊ **kn** > `Kannada`
             ┊ **ko** > `Korean`   
-            ┊ **la** > `Latin`    
+            ┊ **la** > `Latin` 
+            ┊ **lv** > `Latvian`   
             """, inline=False) 
             embedVar.add_field(name="Usage", 
             value="""             
-            ┊ **/setlanguage** > `เปลี่ยนภาษาที่บอทจะพูด`
             ┊ **/setlanguage en** > `เปลี่ยนภาษาเป็นอังกฤษ`        
             """, inline=False) 
             await interaction.response.edit_message(embed=embedVar)
@@ -93,7 +93,6 @@ class Select_Help(discord.ui.Select):
             embedVar = discord.Embed(title="✈️ Support Languages 2", description="ดูภาษาที่บอท support").set_image(url=self.buttomImage)
             embedVar.add_field(name="Languages", 
             value="""
-            ┊ **lv** > `Latvian`
             ┊ **ml** > `Malayalam`
             ┊ **mr** > `Marathi`
             ┊ **ms** > `Malay`
@@ -126,7 +125,6 @@ class Select_Help(discord.ui.Select):
             """, inline=False) 
             embedVar.add_field(name="Usage", 
             value="""             
-            ┊ **/setlanguage** > `เปลี่ยนภาษาที่บอทจะพูด`
             ┊ **/setlanguage en** > `เปลี่ยนภาษาเป็นอังกฤษ`        
             """, inline=False) 
             await interaction.response.edit_message(embed=embedVar)
