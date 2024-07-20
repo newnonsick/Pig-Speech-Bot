@@ -81,8 +81,7 @@ class Select_Help(discord.ui.Select):
             ┊ **km** > `Khmer`
             ┊ **kn** > `Kannada`
             ┊ **ko** > `Korean`   
-            ┊ **la** > `Latin`
-            ┊ **lv** > `Latvian`    
+            ┊ **la** > `Latin`    
             """, inline=False) 
             embedVar.add_field(name="Usage", 
             value="""             
@@ -94,6 +93,7 @@ class Select_Help(discord.ui.Select):
             embedVar = discord.Embed(title="✈️ Support Languages 2", description="ดูภาษาที่บอท support").set_image(url=self.buttomImage)
             embedVar.add_field(name="Languages", 
             value="""
+            ┊ **lv** > `Latvian`
             ┊ **ml** > `Malayalam`
             ┊ **mr** > `Marathi`
             ┊ **ms** > `Malay`
