@@ -51,7 +51,8 @@ class Select_Help(discord.ui.Select):
         elif self.values[0] == "Support Languages":
             embedVar = discord.Embed(title="🌐 Support Languages", description="ดูภาษาที่บอท support").set_image(url=self.buttomImage)
             embedVar.add_field(name="Languages", 
-            value="""             
+            value="""    
+            ┊ **auto** > `Auto Detect Language`      
             ┊ **af** > `Afrikaans`
             ┊ **ar** > `Arabic`
             ┊ **bg** > `Bulgarian`
