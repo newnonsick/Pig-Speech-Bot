@@ -8,7 +8,7 @@ class SetLanguage(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @app_commands.command(name="setlanguage", description="Set the llanguage for bot to speak in. /help to see the list of available languages") 
+    @app_commands.command(name="setlanguage", description="Set the language for bot to speak in. /help to see the list of available languages") 
     async def setLanguage_command(self, interaction: discord.Interaction, language: str):     
         if interaction.guild_id is None:     
             await interaction.response.send_message("This command can only be used in a server.", ephemeral=True)
