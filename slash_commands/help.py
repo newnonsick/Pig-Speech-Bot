@@ -27,9 +27,9 @@ class Select_Help(discord.ui.Select):
             value="""             
 **Set up your channel first by using** `/setchannel` **and type in that channel**:
 
-- **With Prefix**:
+- **With Prefix** (Set up a prefix first using `/setprefix [prefix]`):
     - If you set a prefix, type the prefix followed by the message you want the bot to speak.
-  - **Example**: Typing `.s Hello` makes the bot speak "Hello"
+  - **Example**: Typing `[prefix] Hello` makes the bot speak "Hello"
 
 - **Without Prefix**:
     - Simply type the message you want the bot to speak.
