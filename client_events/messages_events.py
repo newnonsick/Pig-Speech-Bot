@@ -87,7 +87,7 @@ class MessagesEvents(commands.Cog):
             if guildData.xSaidName:
                 messageToSpeak = message.content
             else:
-                messageToSpeak = f"{message.author.display_name} {DataStorage.saidDict[language]} {message.content}"
+                messageToSpeak = f"{message.author.name} {DataStorage.saidDict[language]} {message.content}"
 
             tts = gTTS(messageToSpeak, lang=language)
 

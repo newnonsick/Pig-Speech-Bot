@@ -22,34 +22,39 @@ class Select_Help(discord.ui.Select):
             embedVar.add_field(name="📖 Privacy Policy", value="┊[CLICK HERE](https://shorturl.at/CswvS)", inline=False)
             await interaction.response.edit_message(embed=embedVar)         
         elif self.values[0] == "How to make a bot speak":                          
-            embedVar = discord.Embed(title="📄 How to make a bot speak", description="/setprefix เพื่อเซ็ต prefix เพื่อให้บอทอ่าน (ไม่เซ็ตก็ได้)").set_image(url=self.buttomImage)             
-            embedVar.add_field(name="Usage", 
+            embedVar = discord.Embed(title="📄 How to make a bot speak", description="").set_image(url=self.buttomImage)             
+            embedVar.add_field(name="", 
             value="""             
-            ┊ **ถ้าเช็ต prefix ให้พิมพ์ prefix ตามด้วยคำที่ต้องการให้บอทอ่าน** 
-            ┊ **/setprefix  .s** > `เซ็ต prefix เป็น .s`             
-            ┊ **.s สวัสดี** > `บอทจะอ่านว่าสวัสดี`                 
-            ┊             
-            ┊ **ถ้าไม่เช็ต prefix ให้พิมพ์แค่คำที่ต้องการให้บอทอ่าน**             
-            ┊ **สวัสดี** > `บอทจะอ่านว่าสวัสดี`                                               
+**Set up your channel first by using** `/setchannel` **and type in that channel**:
+
+- **With Prefix**:
+    - If you set a prefix, type the prefix followed by the message you want the bot to speak.
+  - **Example**: Typing `.s Hello` makes the bot speak "Hello"
+
+- **Without Prefix**:
+    - Simply type the message you want the bot to speak.
+  - **Example**: Typing `Hello` will make the bot speak "Hello"                                               
             """, inline=False)             
             await interaction.response.edit_message(embed=embedVar)         
-        elif self.values[0] == "Slash Commands":                          
-            embedVar = discord.Embed(title="📏 Slash Commands", description="Prefix ที่ไว้สำหรับเรียกใช้คำสั่งคือ `/`").set_image(url=self.buttomImage)             
+        elif self.values[0] == "Slash Commands":            
+            embedVar = discord.Embed(title="📏 Slash Commands", description="").set_image(url=self.buttomImage)             
             embedVar.add_field(name="Commands", 
             value="""             
-            ┊ **/help** > `ดูคำสั่งทั้งหมด`             
-            ┊ **/fix** > `แก้ไขบัค`             
-            ┊ **/disconnect** > `ให้บอทออกจากห้อง`             
-            ┊ **/setchannel** > `ตั้งค่าห้องที่จะให้บอทอ่าน`             
-            ┊ **/unsetchannel** > `ยกเลิกการตั้งค่าห้องที่จะให้บอทอ่าน`             
-            ┊ **/setprefix** > `ตั้งค่า prefix ให้กับบอท`  
-            ┊ **/removeprefix** > `ลบ prefix ที่ตั้งไว้` 
-            ┊ **/xsaidname** > `ให้บอทอ่านแค่ข้อความไม่พูดชื่อ on/off`
-            ┊ **/setlanguage** > `เปลี่ยนภาษาที่บอทจะพูด`          
+- **`/help`**: View all available commands and learn how to use them effectively.
+- **`/fix`**: Automatically fixes common issues or bugs to ensure smooth operation.
+- **`/disconnect`**: Commands the bot to leave the voice channel, providing control over its activity.
+- **`/setchannel`**: Designate a specific channel where the bot will read messages, allowing for tailored usage.
+- **`/unsetchannel`**: Remove the channel setting.
+- **`/setprefix [prefix]`**: Customize the prefix for bot commands to suit your server's style.
+- **`/removeprefix`**: Remove the previously set prefix, reverting to default settings.
+- **`/xsaidname [on/off]`**: Toggle the feature that lets the bot read messages without announcing the user's name.
+    - With `xsaidname off`: Typing "Hello" will make the bot say, "<username> said Hello"
+  - With `xsaidname on`: Typing "Hello" will make the bot say, "Hello"
+- **`/setlanguage [language_code]`**: Change the language the bot uses to speak, perfect for multilingual communities.
             """, inline=False)             
             await interaction.response.edit_message(embed=embedVar) 
         elif self.values[0] == "Support Languages":
-            embedVar = discord.Embed(title="🌐 Support Languages", description="ดูภาษาที่บอท support").set_image(url=self.buttomImage)
+            embedVar = discord.Embed(title="🌐 Support Languages", description="").set_image(url=self.buttomImage)
             embedVar.add_field(name="Languages", 
             value="""         
             ┊ **af** > `Afrikaans`
@@ -85,12 +90,12 @@ class Select_Help(discord.ui.Select):
             """, inline=False) 
             embedVar.add_field(name="Usage", 
             value="""             
-            ┊ **/setlanguage en** > `เปลี่ยนภาษาเป็นอังกฤษ` 
-            ┊ **/setlanguage auto** > `เปลี่ยนเป็นให้บอทเลือกภาษาให้เอง`      
+            ┊ **/setlanguage en** > `Change the language to English`   
+            ┊ **/setlanguage auto** > `Let the bot choose the language by itself`
             """, inline=False) 
             await interaction.response.edit_message(embed=embedVar)
         elif self.values[0] == "Support Languages 2":
-            embedVar = discord.Embed(title="✈️ Support Languages 2", description="ดูภาษาที่บอท support").set_image(url=self.buttomImage)
+            embedVar = discord.Embed(title="✈️ Support Languages 2", description="").set_image(url=self.buttomImage)
             embedVar.add_field(name="Languages", 
             value="""
             ┊ **ml** > `Malayalam`
@@ -125,8 +130,8 @@ class Select_Help(discord.ui.Select):
             """, inline=False) 
             embedVar.add_field(name="Usage", 
             value="""             
-            ┊ **/setlanguage en** > `เปลี่ยนภาษาเป็นอังกฤษ`   
-            ┊ **/setlanguage auto** > `เปลี่ยนเป็นให้บอทเลือกภาษาให้เอง`      
+            ┊ **/setlanguage en** > `Change the language to English`   
+            ┊ **/setlanguage auto** > `Let the bot choose the language by itself`      
             """, inline=False) 
             await interaction.response.edit_message(embed=embedVar)
 
