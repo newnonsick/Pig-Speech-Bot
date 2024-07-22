@@ -33,7 +33,11 @@ class Select_Help(discord.ui.Select):
 
 - **Without Prefix**:
     - Simply type the message you want the bot to speak.
-  - **Example**: Typing `Hello` will make the bot speak "Hello"                                               
+  - **Example**: Typing `Hello` will make the bot speak "Hello"
+
+- **`/xsaidname [on/off]`**: Toggle the feature that lets the bot read messages without announcing the user's name.
+    - With `xsaidname off`: Typing "Hello" will make the bot say, "<username> said Hello"
+  - With `xsaidname on`: Typing "Hello" will make the bot say, "Hello"                                           
             """, inline=False)             
             await interaction.response.edit_message(embed=embedVar)         
         elif self.values[0] == "Slash Commands":            
