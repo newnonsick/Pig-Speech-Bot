@@ -14,7 +14,9 @@ class SetLanguage(commands.Cog):
             await interaction.response.send_message("This command can only be used in a server.", ephemeral=True)
             return
         
-        if language not in DataStorage.languages:
+        language = language.lower().strip()
+        
+        if language not in DataStorage.landict.keys():
             embed = discord.Embed(description=f"Invalid language. Please use `/help` to see the list of available languages.", color=discord.Color.red())
             await interaction.response.send_message(embed=embed)
             return
@@ -28,6 +30,6 @@ class SetLanguage(commands.Cog):
             DataStorage.guildDict[interaction.guild.id].language = language
             DataStorage.mongoClient.update_one({"guildID": interaction.guild.id}, {"$set": {"language": language}})
 
-        embed = discord.Embed(description=f"Language set to `{language}`", color=discord.Color.blue())         
+        embed = discord.Embed(description=f"Language set to `{DataStorage.landict[language]}`", color=discord.Color.blue())         
         await interaction.edit_original_response(embed=embed)
     

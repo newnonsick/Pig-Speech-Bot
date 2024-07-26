@@ -8,7 +8,7 @@ class DataStorage:
     guildDict  = {}
     mongoClient = None
     saidDict = {}
-    languages = list()
+    landict = {}
 
     @classmethod
     def initialize(cls):
@@ -31,67 +31,7 @@ class DataStorage:
             cls.guildDict[guild_id] = Guild(guild['guildID'], guild['channelID'], guild['prefix'], guild['language'], guild['xSaidName'])
 
         cls.saidDict = {'af': 'gesê', 'ar': 'قال', 'bg': 'казах', 'bn': 'বলেছেন', 'bs': 'rekao je', 'ca': 'dit', 'cs': 'řekl', 'da': 'sagde', 'de': 'sagte', 'el': 'είπε', 'en': 'Say that', 'es': 'dicho', 'et': 'ütles', 'fi': 'sanoi', 'fr': 'dit', 'gu': 'જણાવ્યું હતું', 'hi': 'कहा', 'hr': 'rekao je', 'hu': 'mondott', 'id': 'dikatakan', 'is': 'sagði', 'it': 'disse', 'iw': 'אמר', 'ja': '言った', 'jw': 'ngandika', 'km': 'បាននិយាយថា', 'kn': 'ಎಂದರು', 'ko': '말했다', 'la': 'dixit', 'lv': 'teica', 'ml': 'പറഞ്ഞു', 'mr': 'म्हणाला', 'ms': 'berkata', 'my': 'ဟုဆိုသည်။', 'ne': 'भन्नुभयो', 'nl': 'gezegd', 'no': 'sa', 'pl': 'powiedział', 'pt': 'disse', 'ro': 'a spus', 'ru': 'сказал', 'si': 'කිව්වා', 'sk': 'povedal', 'sq': 'tha', 'sr': 'рекао', 'su': 'ceuk', 'sv': 'sa', 'sw': 'sema', 'ta': 'கூறினார்', 'te': 'అన్నారు', 'th': 'บอกว่า', 'tl': 'sabi', 'tr': 'söz konusu', 'uk': 'сказав', 'ur': 'کہا', 'vi': 'nói', 'zh-CN': '说', 'zh-TW': '說', 'zh': '說'}
-        cls.languages = [
-            'auto',
-            'af',
-            'ar',
-            'bg',
-            'bn',
-            'bs',
-            'ca',
-            'cs',
-            'da',
-            'de',
-            'el',
-            'en',
-            'es',
-            'et',
-            'fi',
-            'fr',
-            'gu',
-            'hi',
-            'hr',
-            'hu',
-            'id',
-            'is',
-            'it',
-            'iw',
-            'ja',
-            'jw',
-            'km',
-            'kn',
-            'ko',
-            'la',
-            'lv',
-            'ml',
-            'mr',
-            'ms',
-            'my',
-            'ne',
-            'nl',
-            'no',
-            'pl',
-            'pt',
-            'ro',
-            'ru',
-            'si',
-            'sk',
-            'sq',
-            'sr',
-            'su',
-            'sv',
-            'sw',
-            'ta',
-            'te',
-            'th',
-            'tl',
-            'tr',
-            'uk',
-            'ur',
-            'vi',
-            'zh-CN',
-            'zh-TW',
-            'zh',
-        ]
+        cls.landict = {'auto': 'Auto', 'af': 'Afrikaans', 'ar': 'Arabic', 'bg': 'Bulgarian', 'bn': 'Bengali', 'bs': 'Bosnian', 'ca': 'Catalan', 'cs': 'Czech', 'da': 'Danish', 'de': 'German', 'el': 'Greek', 'en': 'English', 'es': 'Spanish', 'et': 'Estonian', 'fi': 'Finnish', 'fr': 'French', 'gu': 'Gujarati', 'hi': 'Hindi', 'hr': 'Croatian', 'hu': 'Hungarian', 'id': 'Indonesian', 'is': 'Icelandic', 'it': 'Italian', 'iw': 'Hebrew', 'ja': 'Japanese', 'jw': 'Javanese', 'km': 'Khmer', 'kn': 'Kannada', 'ko': 'Korean', 'la': 'Latin', 'lv': 'Latvian', 'ml': 'Malayalam', 'mr': 'Marathi', 'ms': 'Malay', 'my': 'Myanmar (Burmese)', 'ne': 'Nepali', 'nl': 'Dutch', 'no': 'Norwegian', 'pl': 'Polish', 'pt': 'Portuguese', 'ro': 'Romanian', 'ru': 'Russian', 'si': 'Sinhala', 'sk': 'Slovak', 'sq': 'Albanian', 'sr': 'Serbian', 'su': 'Sundanese', 'sv': 'Swedish', 'sw': 'Swahili', 'ta': 'Tamil', 'te': 'Telugu', 'th': 'Thai', 'tl': 'Filipino', 'tr': 
+'Turkish', 'uk': 'Ukrainian', 'ur': 'Urdu', 'vi': 'Vietnamese', 'zh-CN': 'Chinese (Simplified)', 'zh-TW': 'Chinese (Mandarin/Taiwan)', 'zh': 'Chinese (Mandarin)'}
 
         print("DataStorage initialized")

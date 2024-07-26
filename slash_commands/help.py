@@ -61,81 +61,81 @@ class Select_Help(discord.ui.Select):
             embedVar = discord.Embed(title="🌐 Support Languages", description="").set_image(url=self.buttomImage)
             embedVar.add_field(name="Languages", 
             value="""         
-            ┊ **af** > `Afrikaans`
-            ┊ **ar** > `Arabic`
-            ┊ **bg** > `Bulgarian`
-            ┊ **bn** > `Bengali`
-            ┊ **bs** > `Bosnian`
-            ┊ **ca** > `Catalan`
-            ┊ **cs** > `Czech`
-            ┊ **da** > `Danish`
-            ┊ **de** > `German`
-            ┊ **el** > `Greek`
-            ┊ **en** > `English`
-            ┊ **es** > `Spanish`
-            ┊ **et** > `Estonian`
-            ┊ **fi** > `Finnish`
-            ┊ **fr** > `French`
-            ┊ **gu** > `Gujarati`
-            ┊ **hi** > `Hindi`
-            ┊ **hr** > `Croatian`
-            ┊ **hu** > `Hungarian`
-            ┊ **id** > `Indonesian`
-            ┊ **is** > `Icelandic`
-            ┊ **it** > `Italian`
-            ┊ **iw** > `Hebrew`
-            ┊ **ja** > `Japanese`
-            ┊ **jw** > `Javanese`  
-            ┊ **km** > `Khmer`
-            ┊ **kn** > `Kannada`
-            ┊ **ko** > `Korean`   
-            ┊ **la** > `Latin` 
-            ┊ **lv** > `Latvian`   
+- **af** > `Afrikaans`
+- **ar** > `Arabic`
+- **bg** > `Bulgarian`
+- **bn** > `Bengali`
+- **bs** > `Bosnian`
+- **ca** > `Catalan`
+- **cs** > `Czech`
+- **da** > `Danish`
+- **de** > `German`
+- **el** > `Greek`
+- **en** > `English`
+- **es** > `Spanish`
+- **et** > `Estonian`
+- **fi** > `Finnish`
+- **fr** > `French`
+- **gu** > `Gujarati`
+- **hi** > `Hindi`
+- **hr** > `Croatian`
+- **hu** > `Hungarian`
+- **id** > `Indonesian`
+- **is** > `Icelandic`
+- **it** > `Italian`
+- **iw** > `Hebrew`
+- **ja** > `Japanese`
+- **jw** > `Javanese`  
+- **km** > `Khmer`
+- **kn** > `Kannada`
+- **ko** > `Korean`   
+- **la** > `Latin` 
+- **lv** > `Latvian`   
             """, inline=False) 
             embedVar.add_field(name="Usage", 
             value="""             
-            ┊ **/setlanguage en** > `Change the language to English`   
-            ┊ **/setlanguage auto** > `Let the bot choose the language by itself`
+- **/setlanguage en** > `Change the language to English`   
+- **/setlanguage auto** > `Let the bot choose the language by itself`
             """, inline=False) 
             await interaction.response.edit_message(embed=embedVar)
         elif self.values[0] == "Support Languages 2":
             embedVar = discord.Embed(title="✈️ Support Languages 2", description="").set_image(url=self.buttomImage)
             embedVar.add_field(name="Languages", 
             value="""
-            ┊ **ml** > `Malayalam`
-            ┊ **mr** > `Marathi`
-            ┊ **ms** > `Malay`
-            ┊ **my** > `Myanmar (Burmese)`
-            ┊ **ne** > `Nepali`
-            ┊ **nl** > `Dutch`
-            ┊ **no** > `Norwegian`
-            ┊ **pl** > `Polish`
-            ┊ **pt** > `Portuguese`
-            ┊ **ro** > `Romanian`
-            ┊ **ru** > `Russian`
-            ┊ **si** > `Sinhala`
-            ┊ **sk** > `Slovak`
-            ┊ **sq** > `Albanian`
-            ┊ **sr** > `Serbian`
-            ┊ **su** > `Sundanese`
-            ┊ **sv** > `Swedish`
-            ┊ **sw** > `Swahili`
-            ┊ **ta** > `Tamil`
-            ┊ **te** > `Telugu`
-            ┊ **th** > `Thai`
-            ┊ **tl** > `Filipino`
-            ┊ **tr** > `Turkish`
-            ┊ **uk** > `Ukrainian`
-            ┊ **ur** > `Urdu`
-            ┊ **vi** > `Vietnamese`
-            ┊ **zh-CN** > `Chinese (Simplified)`
-            ┊ **zh-TW** > `Chinese (Mandarin/Taiwan)`
-            ┊ **zh** > `Chinese (Mandarin)`         
+- **ml** > `Malayalam`
+- **mr** > `Marathi`
+- **ms** > `Malay`
+- **my** > `Myanmar (Burmese)`
+- **ne** > `Nepali`
+- **nl** > `Dutch`
+- **no** > `Norwegian`
+- **pl** > `Polish`
+- **pt** > `Portuguese`
+- **ro** > `Romanian`
+- **ru** > `Russian`
+- **si** > `Sinhala`
+- **sk** > `Slovak`
+- **sq** > `Albanian`
+- **sr** > `Serbian`
+- **su** > `Sundanese`
+- **sv** > `Swedish`
+- **sw** > `Swahili`
+- **ta** > `Tamil`
+- **te** > `Telugu`
+- **th** > `Thai`
+- **tl** > `Filipino`
+- **tr** > `Turkish`
+- **uk** > `Ukrainian`
+- **ur** > `Urdu`
+- **vi** > `Vietnamese`
+- **zh-CN** > `Chinese (Simplified)`
+- **zh-TW** > `Chinese (Mandarin/Taiwan)`
+- **zh** > `Chinese (Mandarin)`         
             """, inline=False) 
             embedVar.add_field(name="Usage", 
             value="""             
-            ┊ **/setlanguage en** > `Change the language to English`   
-            ┊ **/setlanguage auto** > `Let the bot choose the language by itself`      
+- **/setlanguage en** > `Change the language to English`   
+- **/setlanguage auto** > `Let the bot choose the language by itself`      
             """, inline=False) 
             await interaction.response.edit_message(embed=embedVar)
 
