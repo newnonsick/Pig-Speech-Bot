@@ -15,7 +15,7 @@ class Fix(commands.Cog):
             return
         await interaction.response.defer()
 
-        DataStorage.guildDict[interaction.guild_id].isreading = False
+        DataStorage.guildDict[interaction.guild_id].isReading = False
 
         voice_clients = self.client.voice_clients
         for voice_client in voice_clients:         
