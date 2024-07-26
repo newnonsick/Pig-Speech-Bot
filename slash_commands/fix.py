@@ -15,13 +15,14 @@ class Fix(commands.Cog):
             return
         await interaction.response.defer()
 
-        DataStorage.guildDict[interaction.guild_id].isReading = False
-
         voice_clients = self.client.voice_clients
         for voice_client in voice_clients:         
             if interaction.guild_id == voice_client.guild.id:             
                 await voice_client.disconnect()             
                 break
+
+        DataStorage.guildDict[interaction.guild_id].isReading = False
+        DataStorage.guildDict[interaction.guild_id].readingQueue = list()
 
         if os.path.exists(f"{interaction.guild_id}.mp3"):         
             os.remove(f"{interaction.guild_id}.mp3")

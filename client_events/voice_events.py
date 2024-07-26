@@ -10,11 +10,11 @@ class VoiceEvents(commands.Cog):
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
-        print(1)
         guildData = DataStorage.guildDict[member.guild.id]
         if member == self.client.user:         
-            if before.channel and (after.channel is None or after.channel != before.channel):             
+            if before.channel and (after.channel is None or after.channel != before.channel):
                 guildData.readingQueue = list()
+                guildData.isReading = False
 
         if after.channel != before.channel:         
             voice_clients = self.client.voice_clients         

@@ -81,7 +81,7 @@ class MessagesEvents(commands.Cog):
                 except:
                     language = 'en'
 
-            if language not in DataStorage.languages:
+            if language not in DataStorage.landict.keys():
                 language = 'en'
 
             if guildData.xSaidName:
