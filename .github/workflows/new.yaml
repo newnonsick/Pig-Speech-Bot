@@ -13,11 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/PigSpeech:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/pigspeech:latest .
       - name: Push the Docker image
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/PigSpeech:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/pigspeech:latest
   deploy:
     runs-on: ubuntu-latest
     steps:
