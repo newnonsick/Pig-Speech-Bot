@@ -85,7 +85,7 @@ class MessagesEvents(commands.Cog):
                 while voice.is_playing():
                     await asyncio.sleep(0.1)
         except Exception as e:
-            pass
+            audio_file = f"{message.guild.id}.mp3"
         finally:
             guild_data.isReading = False
 
@@ -111,10 +111,7 @@ class MessagesEvents(commands.Cog):
     async def _get_tts_audio(self, guild_id, text, language):
         tts = gTTS(text, lang=language)
         filename = f"{guild_id}.mp3"
-        try:
-            tts.save(filename)
-        except:
-            pass
+        tts.save(filename)
         return filename
 
     async def _send_embed(self, message, description, color):
