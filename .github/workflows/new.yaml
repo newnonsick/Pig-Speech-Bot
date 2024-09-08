@@ -12,15 +12,63 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Capture start time
+        id: start-time
+        run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV
+
       - name: Build the Docker image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/pigspeech:latest .
+
+      - name: Capture end time and calculate build time
+        id: end-time
+        run: |
+          END_TIME=$(date +%s)
+          START_TIME=${{ env.START_TIME }}
+          BUILD_DURATION=$((END_TIME - START_TIME))
+          BUILD_DURATION_FORMATTED=$(printf "%d minutes %d seconds" $((BUILD_DURATION / 60)) $((BUILD_DURATION % 60)))
+          echo "BUILD_DURATION=$BUILD_DURATION_FORMATTED" >> $GITHUB_ENV
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "BUILD_TIMESTAMP=$TIMESTAMP" >> $GITHUB_ENV
+
       - name: Push the Docker image
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ secrets.DOCKER_USERNAME }}/pigspeech:latest
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger deployment
+
+      - name: Work Completed Notification
         run: |
-          curl -X POST ${{secrets.EASY_PANEL_TRIGGER_API}}
+          curl --location ${{ secrets.DISCORD_WEBHOOK }} \
+            --header 'Content-Type: application/json' \
+            --data '{
+              "username": "Pig Speech",
+              "avatar_url": "https://media.discordapp.net/attachments/1041014713816977471/1216018350908379216/pig_logo_2.jpg?ex=66de5297&is=66dd0117&hm=2296c035dd3ddeeba66bf023142ef159dbbc3aa125524d982177fad8dba7ae5d&=&format=webp&width=494&height=494",
+              "embeds": [
+                {
+                  "title": ":white_check_mark: Build & Push Docker Image Successful",
+                  "description": "The Docker image was built and pushed to the repository without errors. Details below:",
+                  "color": 65280,
+                  "fields": [
+                    {
+                      "name": ":whale: Docker Image",
+                      "value": "`pigspeech:latest`",
+                      "inline": false
+                    },
+                    {
+                      "name": ":computer: Build Time",
+                      "value": "`'${{ env.BUILD_DURATION }}'`",
+                      "inline": true
+                    },
+                    {
+                      "name": ":chart_with_upwards_trend: Status",
+                      "value": "`Success`",
+                      "inline": true
+                    }
+                  ],
+                  "footer": {
+                    "text": "Build completed on '${{ env.BUILD_TIMESTAMP }}'",
+                    "icon_url": "https://cdn-icons-png.flaticon.com/512/833/833281.png"
+                  }
+                }
+              ]
+            }'
