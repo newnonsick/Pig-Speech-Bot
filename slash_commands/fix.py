@@ -21,8 +21,8 @@ class Fix(commands.Cog):
                 await voice_client.disconnect()             
                 break
 
-        DataStorage.guildDict[interaction.guild_id].isReading = False
         DataStorage.guildDict[interaction.guild_id].readingQueue = list()
+        DataStorage.guildDict[interaction.guild_id].isReading = False
 
         if os.path.exists(f"{interaction.guild_id}.mp3"):         
             os.remove(f"{interaction.guild_id}.mp3")

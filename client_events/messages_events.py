@@ -7,101 +7,118 @@ from data_storage import DataStorage
 from langdetect import detect
 
 class MessagesEvents(commands.Cog):
-
     def __init__(self, client):
         self.client = client
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.author == self.client.user:
-            return
+        if self._should_process_message(message):
+            asyncio.create_task(self._process_message(message))
 
-        if message.guild is None:         
-            return
-
-        if not message.content:
-            return
-
+    def _should_process_message(self, message):
+        if message.author == self.client.user or message.guild is None or not message.content:
+            return False
         if message.guild.id not in DataStorage.guildDict:
+            return False
+        guild_data = DataStorage.guildDict[message.guild.id]
+        if message.channel.id != guild_data.channelID:
+            return False
+        if not message.content.startswith(guild_data.prefix):
+            return False
+        if message.content == DataStorage.guildDict[message.guild.id].prefix:
+            return False
+        return True
+
+    async def _process_message(self, message):
+        guild_data = DataStorage.guildDict[message.guild.id]
+        
+        try:
+            user_voice_channel = message.author.voice.channel
+        except AttributeError:
+            await self._send_embed(message, "You are not in a voice channel.", discord.Color.red())
             return
 
-        guildData = DataStorage.guildDict[message.guild.id]
+        in_voice_channel = discord.utils.get(self.client.voice_clients, guild=message.guild)
 
-        if message.channel.id != guildData.channelID:
+        if in_voice_channel and (user_voice_channel != in_voice_channel.channel):
+            await self._send_embed(message, "I'm already in another voice channel.", discord.Color.red())
             return
 
-        if not message.content.startswith(guildData.prefix):
+        message.content = message.content[len(guild_data.prefix):]
+
+        if guild_data.isReading:
+            guild_data.readingQueue.append(message)
             return
+
+        await self._connect_to_voice(message, user_voice_channel)
+        await self._speak_message(message, guild_data)
+
+    async def _connect_to_voice(self, message, voice_channel):
+        if not discord.utils.get(self.client.voice_clients, guild=message.guild):
+            permissions = voice_channel.permissions_for(message.guild.me)
+            if not permissions.connect or not permissions.speak:
+                await self._send_embed(message, "I don't have permission to connect or speak in that voice channel.", discord.Color.red())
+                return None
+
+            try:
+                return await voice_channel.connect()
+            except discord.errors.ClientException:
+                await self._send_embed(message, "I'm having trouble connecting to the voice channel. Please try again.", discord.Color.red())
+                return None
+        return discord.utils.get(self.client.voice_clients, guild=message.guild)
+
+    async def _speak_message(self, message, guild_data):
+        voice = discord.utils.get(self.client.voice_clients, guild=message.guild)
+        if not voice:
+            return
+
+        guild_data.isReading = True
 
         try:
-            userVoiceChannel = message.author.voice.channel
-        except AttributeError:                 
-            embed = discord.Embed(description="You are not in a voice channel.", color=discord.Color.red())                 
-            await message.channel.send(embed=embed, reference=message)                 
-            return
-        inVoiceChannel = discord.utils.get(self.client.voice_clients, guild=message.guild) 
-
-        if inVoiceChannel and (userVoiceChannel != inVoiceChannel.channel):                 
-            embed = discord.Embed(description="I'm already in another voice channel.", color=discord.Color.red())                 
-            await message.channel.send(embed=embed, reference=message)                 
-            return
-        
-        message.content = message.content[len(guildData.prefix):]
-
-        if guildData.isReading:
-            guildData.readingQueue.append(message)
-            return
-        else:
-            if not inVoiceChannel:                 
-                permissions = userVoiceChannel.permissions_for(message.guild.me)                 
-                if not permissions.connect or not permissions.speak:                     
-                    embed = discord.Embed(description="I don't have permission to connect or speak in that voice channel.", color=discord.Color.red())                    
-                    await message.channel.send(embed=embed, reference=message)                     
-                    return   
-                               
-                voice = await userVoiceChannel.connect()  
-
-                while not voice.is_connected():                     
-                    await asyncio.sleep(0.5)  
-            else:
-                voice = inVoiceChannel
-                permissions = userVoiceChannel.permissions_for(message.guild.me)
-                if not permissions.speak:
-                    embed = discord.Embed(description="I don't have permission to speak in that voice channel.", color=discord.Color.red())
-                    await message.channel.send(embed=embed, reference=message)
-                    return
-
-            guildData.isReading = True
-
-            language = guildData.language
+            language = self._detect_language(message.content, guild_data.language)
+            message_to_speak = self._format_message(message, guild_data, language)
             
-            if language == 'auto':
-                try:
-                    language = detect(message.content)
-                except:
-                    language = 'en'
+            audio_file = await self._get_tts_audio(message.guild.id, message_to_speak, language)
+            
+            if audio_file:
+                voice.play(discord.FFmpegPCMAudio(audio_file))
+                while voice.is_playing():
+                    await asyncio.sleep(0.1)
+        except Exception as e:
+            pass
+        finally:
+            guild_data.isReading = False
 
-            if language not in DataStorage.landict.keys():
-                language = 'en'
+        if guild_data.readingQueue:
+            next_message = guild_data.readingQueue.pop(0)
+            asyncio.create_task(self._process_message(next_message))
+        else:
+            os.remove(audio_file)
 
-            if guildData.xSaidName:
-                messageToSpeak = message.content
-            else:
-                messageToSpeak = f"{message.author.name} {DataStorage.saidDict[language]} {message.content}"
+    def _detect_language(self, content, default_language):
+        if default_language == 'auto':
+            try:
+                return detect(content)
+            except:
+                return 'en'
+        return default_language if default_language in DataStorage.landict else 'en'
 
-            tts = gTTS(messageToSpeak, lang=language)
+    def _format_message(self, message, guild_data, language):
+        if guild_data.xSaidName:
+            return message.content
+        return f"{message.author.name} {DataStorage.saidDict[language]} {message.content}"
 
-            tts.save(f"{message.guild.id}.mp3")
-            voice.play(discord.FFmpegPCMAudio(f"{message.guild.id}.mp3"))
+    async def _get_tts_audio(self, guild_id, text, language):
+        tts = gTTS(text, lang=language)
+        filename = f"{guild_id}.mp3"
+        try:
+            tts.save(filename)
+        except:
+            pass
+        return filename
 
-            while voice.is_playing():                     
-                await asyncio.sleep(1) 
+    async def _send_embed(self, message, description, color):
+        embed = discord.Embed(description=description, color=color)
+        await message.channel.send(embed=embed, reference=message)
 
-            if os.path.exists(f"{message.guild.id}.mp3"):
-                os.remove(f"{message.guild.id}.mp3")
-
-            guildData.isReading = False
-
-            if guildData.readingQueue:
-                await self.on_message(guildData.readingQueue.pop(0))
-        
+    # def cog_unload(self):
