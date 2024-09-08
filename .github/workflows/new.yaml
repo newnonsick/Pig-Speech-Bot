@@ -12,6 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Capture start time
         id: start-time
@@ -51,7 +53,10 @@ jobs:
           PUSH_TIMESTAMP=$(TZ='Asia/Bangkok' date -u +"%Y-%m-%dT%H:%M:%SZ")
           echo "PUSH_TIMESTAMP=$PUSH_TIMESTAMP" >> $GITHUB_ENV
 
+      - name: Capture Commit Message
+        run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+
+
       - name: Work Completed Notification
         run: | 
-          echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
           curl --location "${{ secrets.DISCORD_WEBHOOK }}" --header 'Content-Type: application/json' --data '{"username": "Pig Speech", "avatar_url": "https://media.discordapp.net/attachments/1041014713816977471/1216018350908379216/pig_logo_2.jpg?ex=66de5297&is=66dd0117&hm=2296c035dd3ddeeba66bf023142ef159dbbc3aa125524d982177fad8dba7ae5d&=&format=webp&width=494&height=494", "embeds": [{"title": ":white_check_mark: Build & Push Docker Image Successful", "description": "The Docker image was built and pushed to the repository without errors. Details below:", "color": 65280, "fields": [{"name": ":whale: Docker Image", "value": "`pigspeech:latest`", "inline": false}, {"name": ":pencil: Commit Message", "value": "`${{ env.COMMIT_MESSAGE }}`", "inline": false}, {"name": ":computer: Build Time", "value": "`${{ env.BUILD_DURATION }}`", "inline": true}, {"name": ":rocket: Push Time", "value": "`${{ env.PUSH_DURATION }}`", "inline": true}, {"name": ":chart_with_upwards_trend: Status", "value": "`Success`", "inline": true}], "footer": {"text": "Build completed on ${{ env.BUILD_TIMESTAMP }}", "icon_url": "https://www.iconarchive.com/download/i141856/iconarchive/cute-animal/Cute-Pig.1024.png"}}]}' 
