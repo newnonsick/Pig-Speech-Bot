@@ -5,14 +5,14 @@ from discord import app_commands
 class Select_Help(discord.ui.Select):     
     def __init__(self):         
         options=[            
-        discord.SelectOption(label="Please select an option!",emoji="🏡",default=True),             
+        # discord.SelectOption(label="Please select an option!",emoji="🏡"),             
         discord.SelectOption(label="Main Page",emoji="🗼"),             
         discord.SelectOption(label="How to make a bot speak",emoji="❔"),             
         discord.SelectOption(label="Slash Commands",emoji="📏"),
         discord.SelectOption(label="Support Languages",emoji="🌐"),
         discord.SelectOption(label="Support Languages 2",emoji="✈️"),
         ]         
-        super().__init__(max_values=1,min_values=1,options=options) 
+        super().__init__(max_values=1,min_values=1,options=options, placeholder="🏡 Please select an option!") 
         self.buttomImage = "https://cdn.discordapp.com/attachments/1041014713816977471/1264297698190688316/PigSpeech.png?ex=669d5c7c&is=669c0afc&hm=8937ed0e690cf64479944749c2417e87c41cc4d1b18a9ddd826b01f8950da6df&"  
 
     async def callback(self, interaction: discord.Interaction):         

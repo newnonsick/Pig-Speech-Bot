@@ -20,7 +20,9 @@ jobs:
         run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV
 
       - name: Build the Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/pigspeech:latest .
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/pigspeech:latest 2>&1 | tee build_output.log
+        continue-on-error: true
 
       - name: Capture end time and calculate build time
         id: end-time
@@ -40,7 +42,8 @@ jobs:
       - name: Push the Docker image
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/pigspeech:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/pigspeech:latest 2>&1 | tee push_output.log
+        continue-on-error: true
 
       - name: Capture end time for push and calculate push duration
         id: push-end-time
@@ -56,7 +59,38 @@ jobs:
       - name: Capture Commit Message
         run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
 
+      - name: Store Build Error Message in ENV
+        if: failure()
+        run: |
+          ERROR_MESSAGE=$(tail -n 10 build_output.log)
+          echo "ERROR_MESSAGE=$ERROR_MESSAGE" >> $GITHUB_ENV
+
+      - name: Store Push Error Message in ENV
+        if: failure()
+        run: |
+          PUSH_ERROR_MESSAGE=$(tail -n 10 push_output.log)
+          echo "PUSH_ERROR_MESSAGE=$PUSH_ERROR_MESSAGE" >> $GITHUB_ENV
+
+      - name: Upload Build Log
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output-log
+          path: build_output.log
+
+      - name: Upload Push Log
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: push-output-log
+          path: push_output.log
 
       - name: Work Completed Notification
+        if: success()
         run: | 
           curl --location "${{ secrets.DISCORD_WEBHOOK }}" --header 'Content-Type: application/json' --data '{"username": "Pig Speech", "avatar_url": "https://media.discordapp.net/attachments/1041014713816977471/1216018350908379216/pig_logo_2.jpg?ex=66de5297&is=66dd0117&hm=2296c035dd3ddeeba66bf023142ef159dbbc3aa125524d982177fad8dba7ae5d&=&format=webp&width=494&height=494", "embeds": [{"title": ":white_check_mark: Build & Push Docker Image Successful", "description": "The Docker image was built and pushed to the repository without errors. Details below:", "color": 65280, "fields": [{"name": ":whale: Docker Image", "value": "`pigspeech:latest`", "inline": false}, {"name": ":pencil: Commit Message", "value": "`${{ env.COMMIT_MESSAGE }}`", "inline": false}, {"name": ":computer: Build Time", "value": "`${{ env.BUILD_DURATION }}`", "inline": true}, {"name": ":rocket: Push Time", "value": "`${{ env.PUSH_DURATION }}`", "inline": true}, {"name": ":chart_with_upwards_trend: Status", "value": "`Success`", "inline": true}], "footer": {"text": "Build completed on ${{ env.BUILD_TIMESTAMP }}", "icon_url": "https://www.iconarchive.com/download/i141856/iconarchive/cute-animal/Cute-Pig.1024.png"}}]}' 
+
+      - name: Failure Notification
+        if: failure()
+        run: |
+          curl --location "${{ secrets.DISCORD_WEBHOOK }}" --header 'Content-Type: application/json' --data '{"username": "Pig Speech", "avatar_url": "https://media.discordapp.net/attachments/1041014713816977471/1216018350908379216/pig_logo_2.jpg?ex=66de5297&is=66dd0117&hm=2296c035dd3ddeeba66bf023142ef159dbbc3aa125524d982177fad8dba7ae5d&=&format=webp&width=494&height=494", "embeds": [{"title": ":x: Build & Push Docker Image Failed", "description": "The Docker image build or push process encountered errors. Error Logs below:", "color": 16711680, "fields": [{"name": ":pencil: Commit Message", "value": "`${{ env.COMMIT_MESSAGE }}`", "inline": false}, {"name": ":chart_with_downwards_trend: Status", "value": "`Failure`", "inline": true}, {"name": "Build Error Logs", "value": "`${{ env.ERROR_MESSAGE }}`", "inline": false}, {"name": "Push Error Logs", "value": "`${{ env.PUSH_ERROR_MESSAGE }}`", "inline": false}], "footer": {"text": "Failure occurred on ${{ env.BUILD_TIMESTAMP }}", "icon_url": "https://www.iconarchive.com/download/i141856/iconarchive/cute-animal/Cute-Pig.1024.png"}}]}' 
