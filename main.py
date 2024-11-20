@@ -7,6 +7,7 @@ from client_events.gateway_events import GatewayEvents
 from client_events.guilds_events import GuildsEvents
 from client_events.messages_events import MessagesEvents
 from client_events.voice_events import VoiceEvents
+from prefix_commands.notification import Notification
 from slash_commands.setchannel import SetChannel
 from slash_commands.unsetchannel import UnSetChannel
 from slash_commands.setprefix import SetPrefix
@@ -18,14 +19,13 @@ from slash_commands.disconnect import Disconnect
 from slash_commands.help import Help
 from data_storage import DataStorage
 
-
 intents = discord.Intents.default() 
 intents.messages = True 
 intents.voice_states = True 
 intents.message_content = True 
 intents.members = True  
 
-client = commands.Bot(command_prefix='!0!0!0', intents=intents)
+client = commands.Bot(command_prefix='n!', intents=intents)
 
 async def main():
     async with client:
@@ -44,8 +44,8 @@ async def main():
         await client.add_cog(Fix(client=client))
         await client.add_cog(Disconnect(client=client))
         await client.add_cog(Help(client=client))
+        await client.add_cog(Notification(client=client))
         await client.start(os.getenv("BOT_TOKEN"))
-
 
 if __name__ == "__main__":
     try:     
