@@ -53,6 +53,10 @@ class Notification(commands.Cog):
 
                 for guild in self.client.guilds:
                     server_owner = guild.owner
+
+                    if server_owner is None or server_owner.id == DataStorage.bot_owner_id: 
+                        continue
+                    
                     try:
                         await server_owner.send(embed=embedVar)
                     except discord.Forbidden:
