@@ -13,6 +13,9 @@ class SetPrefix(commands.Cog):
         if interaction.guild_id is None:
             await interaction.response.send_message("This command can only be used in a server.", ephemeral=True)
             return
+        
+        if len(prefix) > 5:
+            await interaction.response.send_message("Prefix can't be longer than 5 characters.", ephemeral=True)
            
         await interaction.response.defer()
 

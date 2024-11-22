@@ -20,7 +20,7 @@ class VoiceEvents(commands.Cog):
             voice_clients = self.client.voice_clients         
             for voice_client in voice_clients:             
                 if before.channel == voice_client.channel or after.channel == voice_client.channel:                 
-                    if (before.channel and len(before.channel.members) == 1) or (after.channel and len(after.channel.members) == 1 and member == self.client.user):                     
+                    if (before.channel and len(before.channel.members) == 1 and before.channel.members[0] == self.client.user) or (after.channel and len(after.channel.members) == 1 and member == self.client.user):                     
                         if member == self.client.user:                         
                             guildData.readingQueue = list()                                      
                             guildData.isReading = False
