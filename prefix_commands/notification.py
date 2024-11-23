@@ -1,3 +1,4 @@
+import asyncio
 import discord
 from discord.ext import commands
 from discord.ui import View, Button
@@ -12,7 +13,6 @@ class Notification(commands.Cog):
         if ctx.author.id != DataStorage.bot_owner_id or not message:
             return
 
-        # Create the embed message
         embedVar = (
             discord.Embed(
                 title="🐷 Oink Oink! Pig Speech Notification! 🎉",
@@ -40,7 +40,7 @@ class Notification(commands.Cog):
 
         class DecisionView(View):
             def __init__(self, client):
-                super().__init__(timeout=60)
+                super().__init__(timeout=120)
                 self.client = client
 
             @discord.ui.button(label="Send Notification", style=discord.ButtonStyle.green)
@@ -51,20 +51,40 @@ class Notification(commands.Cog):
                     )
                     return
 
+                await interaction.response.edit_message(
+                    content="Sending notifications, this may take some time...", view=None
+                )
+
+                sent_count = 0
+                error_count = 0
+                userSent = []
                 for guild in self.client.guilds:
                     server_owner = guild.owner
 
-                    if server_owner is None or server_owner.id == DataStorage.bot_owner_id: 
+                    if (not server_owner) or (server_owner.id == DataStorage.bot_owner_id) or (server_owner.id in userSent): 
                         continue
                     
                     try:
                         await server_owner.send(embed=embedVar)
+                        sent_count += 1
                     except discord.Forbidden:
-                        print(f"Could not send a DM to the owner of {guild.name} (ID: {guild.id}).")
+                        # print(f"Could not send a DM to the owner of {guild.name} (ID: {guild.id}).")
+                        error_count += 1
+                    except Exception as e:
+                        # print(f"An error occurred while sending a DM to the owner of {guild.name} (ID: {guild.id}): {e}")
+                        error_count += 1
+                    finally:
+                        userSent.append(server_owner.id)
 
-                await interaction.response.edit_message(
-                    content="Notification sent to all server owners!", view=None
+                    await asyncio.sleep(2)
+
+                final_message = (
+                    f"Notification process completed!\n"
+                    f"✅ Successfully sent: {sent_count}\n"
+                    f"❌ Failed to send: {error_count}\n"
+                    f"Thank you for your patience!"
                 )
+                await interaction.followup.send(content=final_message)
 
             @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
             async def cancel_button(self, interaction: discord.Interaction, button: Button):

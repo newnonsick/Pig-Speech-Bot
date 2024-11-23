@@ -7,7 +7,9 @@ from client_events.gateway_events import GatewayEvents
 from client_events.guilds_events import GuildsEvents
 from client_events.messages_events import MessagesEvents
 from client_events.voice_events import VoiceEvents
+from prefix_commands.addpresence import AddPresence
 from prefix_commands.notification import Notification
+from prefix_commands.removepresence import RemovePresence
 from slash_commands.setchannel import SetChannel
 from slash_commands.unsetchannel import UnSetChannel
 from slash_commands.setprefix import SetPrefix
@@ -45,6 +47,8 @@ async def main():
         await client.add_cog(Disconnect(client=client))
         await client.add_cog(Help(client=client))
         await client.add_cog(Notification(client=client))
+        await client.add_cog(AddPresence(client=client))
+        await client.add_cog(RemovePresence(client=client))
         await client.start(os.getenv("BOT_TOKEN"))
 
 if __name__ == "__main__":

@@ -9,5 +9,5 @@ class GatewayEvents(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         await self.client.tree.sync()
-        await Utils.update_presence(self.client)
         print(f'We have logged in as {self.client.user.name}')  
+        await Utils.update_presence(self.client)

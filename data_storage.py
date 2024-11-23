@@ -9,6 +9,7 @@ class DataStorage:
     saidDict = {}
     landict = {}
     bot_owner_id = 360399310539718658
+    presences = []
 
     @classmethod
     def initialize(cls):
