@@ -19,7 +19,7 @@ class Notification(commands.Cog):
                 description=(
                     f"Hello there, friend! 🐽\n"
                     f"Here's an exciting update or notification just for you:\n"
-                    f"\n**{message}**\n"
+                    f"\n{message}\n\n"
                     "Thank you for being an awesome part of our community! 💖"
                 ),
                 color=discord.Color.magenta()
