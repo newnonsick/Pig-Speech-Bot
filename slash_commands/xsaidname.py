@@ -13,6 +13,10 @@ class XsaidName(commands.Cog):
         if interaction.guild_id is None:
             await interaction.response.send_message("This command can only be used in a server.", ephemeral=True)
             return
+        
+        if option not in ["on", "off"]:
+            await interaction.response.send_message("Invalid option. Please choose between 'on' and 'off'.", ephemeral=True)
+            return
            
         await interaction.response.defer()
 
