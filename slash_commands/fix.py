@@ -25,7 +25,10 @@ class Fix(commands.Cog):
         DataStorage.guildDict[interaction.guild_id].isReading = False
 
         if os.path.exists(f"{interaction.guild_id}.mp3"):         
-            os.remove(f"{interaction.guild_id}.mp3")
+            try:
+                os.remove(f"{interaction.guild_id}.mp3")
+            except:
+                pass
 
         embed = discord.Embed(description="Fixed", color=discord.Color.blue())     
         await interaction.edit_original_response(embed=embed)

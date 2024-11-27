@@ -93,7 +93,11 @@ class MessagesEvents(commands.Cog):
             next_message = guild_data.readingQueue.pop(0)
             asyncio.create_task(self._process_message(next_message))
         else:
-            os.remove(audio_file)
+            if os.path.exists(audio_file):
+                try:
+                    os.remove(audio_file)
+                except:
+                    pass
 
     def _detect_language(self, content, default_language):
         if default_language == 'auto':

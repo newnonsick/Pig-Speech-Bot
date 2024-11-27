@@ -21,7 +21,10 @@ class Disconnect(commands.Cog):
                 DataStorage.guildDict[interaction.guild_id].isReading = False
                 DataStorage.guildDict[interaction.guild_id].readingQueue = list()
                 if os.path.exists(f"{interaction.guild_id}.mp3"):
-                    os.remove(f"{interaction.guild_id}.mp3")
+                    try:
+                        os.remove(f"{interaction.guild_id}.mp3")
+                    except:
+                        pass
                 await voice_client.disconnect()
                 embed = discord.Embed(description="Disconnected", color=discord.Color.blue())
                 await interaction.edit_original_response(embed=embed)
