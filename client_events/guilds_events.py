@@ -1,6 +1,7 @@
 from discord.ext import commands
-from utils import Utils
+
 from data_storage import DataStorage
+
 
 class GuildsEvents(commands.Cog):
 
@@ -9,5 +10,5 @@ class GuildsEvents(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
-        DataStorage.mongoClient.delete_one({"guildID": guild.id})
-        DataStorage.guildDict.pop(guild.id, None)
+        DataStorage.mongo_client.delete_one({"guildID": guild.id})
+        DataStorage.guild_dict.pop(guild.id, None)

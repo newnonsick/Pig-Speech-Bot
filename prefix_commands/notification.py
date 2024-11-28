@@ -1,16 +1,19 @@
 import asyncio
+
 import discord
 from discord.ext import commands
-from discord.ui import View, Button
+from discord.ui import Button, View
+
 from data_storage import DataStorage
+
 
 class Notification(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='notification')
+    @commands.command(name="notification")
     async def notification(self, ctx, *, message):
-        if ctx.author.id != DataStorage.bot_owner_id or not message:
+        if ctx.author.id != DataStorage.BOT_OWNER_ID or not message:
             return
 
         embedVar = (
@@ -22,7 +25,7 @@ class Notification(commands.Cog):
                     f"\n{message}\n\n"
                     "Thank you for being an awesome part of our community! 💖"
                 ),
-                color=discord.Color.magenta()
+                color=discord.Color.magenta(),
             )
             .set_image(
                 url="https://cdn.discordapp.com/attachments/1041014713816977471/1264297698190688316/PigSpeech.png"
@@ -30,7 +33,7 @@ class Notification(commands.Cog):
             .add_field(
                 name="💌 Got Questions?",
                 value="Hit me up on Discord **@newnosick** – I'm always here to help! 😄",
-                inline=False
+                inline=False,
             )
             .set_footer(
                 text="Powered by Pig Speech 🐷 | We ❤️ our users!",
@@ -43,8 +46,12 @@ class Notification(commands.Cog):
                 super().__init__(timeout=120)
                 self.client = client
 
-            @discord.ui.button(label="Send Notification", style=discord.ButtonStyle.green)
-            async def send_button(self, interaction: discord.Interaction, button: Button):
+            @discord.ui.button(
+                label="Send Notification", style=discord.ButtonStyle.green
+            )
+            async def send_button(
+                self, interaction: discord.Interaction, button: Button
+            ):
                 if interaction.user.id != ctx.author.id:
                     await interaction.response.send_message(
                         "You are not allowed to use this button.", ephemeral=True
@@ -52,7 +59,8 @@ class Notification(commands.Cog):
                     return
 
                 await interaction.response.edit_message(
-                    content="Sending notifications, this may take some time...", view=None
+                    content="Sending notifications, this may take some time...",
+                    view=None,
                 )
 
                 sent_count = 0
@@ -61,9 +69,13 @@ class Notification(commands.Cog):
                 for guild in self.client.guilds:
                     server_owner = guild.owner
 
-                    if (not server_owner) or (server_owner.id == DataStorage.bot_owner_id) or (server_owner.id in userSent): 
+                    if (
+                        (not server_owner)
+                        or (server_owner.id == DataStorage.BOT_OWNER_ID)
+                        or (server_owner.id in userSent)
+                    ):
                         continue
-                    
+
                     try:
                         await server_owner.send(embed=embedVar)
                         sent_count += 1
@@ -87,7 +99,9 @@ class Notification(commands.Cog):
                 await interaction.followup.send(content=final_message)
 
             @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
-            async def cancel_button(self, interaction: discord.Interaction, button: Button):
+            async def cancel_button(
+                self, interaction: discord.Interaction, button: Button
+            ):
                 if interaction.user.id != ctx.author.id:
                     await interaction.response.send_message(
                         "You are not allowed to use this button.", ephemeral=True
@@ -101,5 +115,5 @@ class Notification(commands.Cog):
         await ctx.send(
             content="Here is a preview of the notification. Use the buttons below to decide:",
             embed=embedVar,
-            view=DecisionView(client=self.client)
+            view=DecisionView(client=self.client),
         )
