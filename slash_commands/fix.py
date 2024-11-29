@@ -8,7 +8,8 @@ from data_storage import DataStorage
 
 
 class Fix(commands.Cog):
-    def __init__(self, client):
+
+    def __init__(self, client: commands.Bot):
         self.client = client
 
     @app_commands.command(name="fix", description="Fix the bot if it is not working")
@@ -22,8 +23,8 @@ class Fix(commands.Cog):
 
         voice_clients = self.client.voice_clients
         for voice_client in voice_clients:
-            if interaction.guild_id == voice_client.guild.id:
-                await voice_client.disconnect()
+            if interaction.guild_id == voice_client.guild.id:  # type: ignore
+                await voice_client.disconnect(force=True)
                 break
 
         DataStorage.guild_dict[interaction.guild_id].readingQueue = list()

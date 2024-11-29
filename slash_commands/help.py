@@ -194,7 +194,8 @@ class Select_Help_View(discord.ui.View):
 
 
 class Help(commands.Cog):
-    def __init__(self, client):
+
+    def __init__(self, client: commands.Bot):
         self.client = client
 
     @app_commands.command(name="help", description="Show the help menu")

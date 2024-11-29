@@ -6,7 +6,8 @@ from data_storage import DataStorage
 
 
 class RemovePresence(commands.Cog):
-    def __init__(self, client):
+
+    def __init__(self, client: commands.Bot):
         self.client = client
 
     @commands.command(name="removepresence")

@@ -10,7 +10,8 @@ from data_storage import DataStorage
 
 
 class MessagesEvents(commands.Cog):
-    def __init__(self, client):
+
+    def __init__(self, client: commands.Bot):
         self.client = client
 
     @commands.Cog.listener()
@@ -104,8 +105,8 @@ class MessagesEvents(commands.Cog):
             )
 
             if audio_file:
-                voice.play(discord.FFmpegPCMAudio(audio_file))
-                while voice.is_playing():
+                voice.play(discord.FFmpegPCMAudio(audio_file))  # type: ignore
+                while voice.is_playing():  # type: ignore
                     await asyncio.sleep(0.1)
         except Exception as e:
             audio_file = f"{message.guild.id}.mp3"

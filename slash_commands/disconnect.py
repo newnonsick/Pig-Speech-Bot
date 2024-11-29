@@ -8,7 +8,8 @@ from data_storage import DataStorage
 
 
 class Disconnect(commands.Cog):
-    def __init__(self, client):
+
+    def __init__(self, client: commands.Bot):
         self.client = client
 
     @app_commands.command(
@@ -24,7 +25,7 @@ class Disconnect(commands.Cog):
 
         voice_clients = self.client.voice_clients
         for voice_client in voice_clients:
-            if interaction.guild_id == voice_client.guild.id:
+            if interaction.guild_id == voice_client.guild.id:  # type: ignore
                 DataStorage.guild_dict[interaction.guild_id].isReading = False
                 DataStorage.guild_dict[interaction.guild_id].readingQueue = list()
                 if os.path.exists(f"{interaction.guild_id}.mp3"):
@@ -32,7 +33,7 @@ class Disconnect(commands.Cog):
                         os.remove(f"{interaction.guild_id}.mp3")
                     except:
                         pass
-                await voice_client.disconnect()
+                await voice_client.disconnect(force=True)
                 embed = discord.Embed(
                     description="Disconnected", color=discord.Color.blue()
                 )

@@ -1,13 +1,14 @@
 import os
+from typing import Dict, List
 
 from models.guild import Guild
 from models.mongodb_client import MongoDBClient
 
 
 class DataStorage:
-    guild_dict = {}
-    BOT_OWNER_ID = 360399310539718658
-    presences = []
+    guild_dict: Dict[int, Guild] = {}
+    BOT_OWNER_ID: int = 360399310539718658
+    presences: List[str] = []
 
     @classmethod
     def initialize(cls):
@@ -31,7 +32,9 @@ class DataStorage:
                 "MongoDB environment variables (MONGO_URI, MONGO_DB, MONGO_COLLECTION) must be set."
             )
 
-        cls.mongo_client = MongoDBClient(mongo_uri, mongo_db, mongo_collection)
+        cls.mongo_client: MongoDBClient = MongoDBClient(
+            mongo_uri, mongo_db, mongo_collection
+        )
 
     @classmethod
     def _load_guild_data(cls):
@@ -55,7 +58,7 @@ class DataStorage:
     @classmethod
     def _initialize_said_dict(cls):
         """Initialize a dictionary mapping language codes to their 'said' equivalent."""
-        cls.SAID_DICT = {
+        cls.SAID_DICT: Dict[str, str] = {
             "af": "gesê",
             "ar": "قال",
             "bg": "казах",
@@ -120,7 +123,7 @@ class DataStorage:
     @classmethod
     def _initialize_lang_dict(cls):
         """Initialize a dictionary mapping language codes to their full names."""
-        cls.LANG_DICT = {
+        cls.LANG_DICT: Dict[str, str] = {
             "auto": "Auto",
             "af": "Afrikaans",
             "ar": "Arabic",

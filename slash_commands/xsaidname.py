@@ -7,7 +7,8 @@ from models.guild import Guild
 
 
 class XsaidName(commands.Cog):
-    def __init__(self, client):
+
+    def __init__(self, client: commands.Bot):
         self.client = client
 
     @app_commands.command(

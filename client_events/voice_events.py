@@ -6,7 +6,8 @@ from data_storage import DataStorage
 
 
 class VoiceEvents(commands.Cog):
-    def __init__(self, client):
+
+    def __init__(self, client: commands.Bot):
         self.client = client
 
     @commands.Cog.listener()
@@ -44,7 +45,7 @@ class VoiceEvents(commands.Cog):
                                     os.remove(f"{before.channel.guild.id}.mp3")
                                 except:
                                     pass
-                            await voice_client.disconnect()
+                            await voice_client.disconnect(force=True)
                         else:
                             guildData.readingQueue = list()
                             guildData.isReading = False
@@ -54,5 +55,5 @@ class VoiceEvents(commands.Cog):
                                     os.remove(f"{before.channel.guild.id}.mp3")
                                 except:
                                     pass
-                            await voice_client.disconnect()
+                            await voice_client.disconnect(force=True)
                         break

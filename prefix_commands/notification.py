@@ -8,11 +8,12 @@ from data_storage import DataStorage
 
 
 class Notification(commands.Cog):
-    def __init__(self, client):
+
+    def __init__(self, client: commands.Bot):
         self.client = client
 
     @commands.command(name="notification")
-    async def notification(self, ctx, *, message):
+    async def notification(self, ctx, *, message: str):
         if ctx.author.id != DataStorage.BOT_OWNER_ID or not message:
             return
 
