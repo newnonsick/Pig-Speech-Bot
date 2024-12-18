@@ -1,3 +1,5 @@
+import asyncio
+
 from discord.ext import commands
 
 from utils import Utils
@@ -15,4 +17,4 @@ class GatewayEvents(commands.Cog):
             print("We are not logged in.")
             return
         print(f"We have logged in as {self.client.user.name}")
-        await Utils.update_presence(self.client)
+        asyncio.create_task(Utils.update_presence(self.client))
