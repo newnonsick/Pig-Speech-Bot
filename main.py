@@ -17,6 +17,7 @@ from slash_commands.disconnect import Disconnect
 from slash_commands.fix import Fix
 from slash_commands.help import Help
 from slash_commands.removeprefix import RemovePrefix
+from slash_commands.serversetting import ServerSetting
 from slash_commands.setchannel import SetChannel
 from slash_commands.setlanguage import SetLanguage
 from slash_commands.setprefix import SetPrefix
@@ -36,22 +37,25 @@ async def main():
     async with client:
         load_dotenv()
         DataStorage.initialize()
-        await client.add_cog(GatewayEvents(client=client))
-        await client.add_cog(GuildsEvents(client=client))
-        await client.add_cog(MessagesEvents(client=client))
-        await client.add_cog(VoiceEvents(client=client))
-        await client.add_cog(SetChannel(client=client))
-        await client.add_cog(UnSetChannel(client=client))
-        await client.add_cog(SetPrefix(client=client))
-        await client.add_cog(RemovePrefix(client=client))
-        await client.add_cog(SetLanguage(client=client))
-        await client.add_cog(XsaidName(client=client))
-        await client.add_cog(Fix(client=client))
-        await client.add_cog(Disconnect(client=client))
-        await client.add_cog(Help(client=client))
-        await client.add_cog(Notification(client=client))
-        await client.add_cog(AddPresence(client=client))
-        await client.add_cog(RemovePresence(client=client))
+        await asyncio.gather(
+            client.add_cog(GatewayEvents(client=client)),
+            client.add_cog(GuildsEvents(client=client)),
+            client.add_cog(MessagesEvents(client=client)),
+            client.add_cog(VoiceEvents(client=client)),
+            client.add_cog(SetChannel(client=client)),
+            client.add_cog(UnSetChannel(client=client)),
+            client.add_cog(SetPrefix(client=client)),
+            client.add_cog(RemovePrefix(client=client)),
+            client.add_cog(SetLanguage(client=client)),
+            client.add_cog(XsaidName(client=client)),
+            client.add_cog(Fix(client=client)),
+            client.add_cog(Disconnect(client=client)),
+            client.add_cog(Help(client=client)),
+            client.add_cog(Notification(client=client)),
+            client.add_cog(AddPresence(client=client)),
+            client.add_cog(RemovePresence(client=client)),
+            client.add_cog(ServerSetting(client=client))
+        )
         await client.start(str(os.getenv("BOT_TOKEN")))
 
 

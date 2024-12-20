@@ -13,7 +13,6 @@ class RemovePresence(commands.Cog):
     @commands.command(name="removepresence")
     async def removepresence(self, ctx):
         if ctx.author.id != DataStorage.BOT_OWNER_ID:
-            await ctx.send("You don't have permission to use this command.")
             return
 
         if len(DataStorage.presences) == 1:
