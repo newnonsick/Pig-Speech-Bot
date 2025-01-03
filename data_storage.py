@@ -69,7 +69,7 @@ class DataStorage:
             "da": "sagde",
             "de": "sagte",
             "el": "είπε",
-            "en": "Say that",
+            "en": "said",
             "es": "dicho",
             "et": "ütles",
             "fi": "sanoi",
