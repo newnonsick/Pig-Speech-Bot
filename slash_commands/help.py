@@ -38,7 +38,7 @@ class Select_Help(discord.ui.Select):
             )
             embedVar.add_field(
                 name="📖 Privacy Policy",
-                value="┊[CLICK HERE](https://shorturl.at/CswvS)",
+                value="┊[CLICK HERE](https://pastebin.com/raw/5zHDX0CS)",
                 inline=False,
             )
             await interaction.response.edit_message(embed=embedVar)
@@ -218,7 +218,7 @@ class Help(commands.Cog):
         )
         embedVar.add_field(
             name="📖 Privacy Policy",
-            value="┊[CLICK HERE](https://shorturl.at/CswvS)",
+            value="┊[CLICK HERE](https://pastebin.com/raw/5zHDX0CS)",
             inline=False,
         )
         await interaction.edit_original_response(
